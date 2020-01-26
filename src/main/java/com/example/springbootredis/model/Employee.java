@@ -1,5 +1,7 @@
 package com.example.springbootredis.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,12 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "employee")
-public class Employee {
+public class Employee implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

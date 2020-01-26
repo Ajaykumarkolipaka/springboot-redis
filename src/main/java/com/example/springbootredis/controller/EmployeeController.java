@@ -32,8 +32,8 @@ public class EmployeeController {
 		return loginService.getAllEmpDetails();
 	}
 	
-	@DeleteMapping("/delete/{empId}")
-	public void deleteByEmpId(@RequestParam Integer empId) {
+	@DeleteMapping("/delete")
+	public void deleteByEmpId(@RequestParam("empId") Integer empId) {
 		loginService.deleteEmpDetails(empId);
 	}
 	

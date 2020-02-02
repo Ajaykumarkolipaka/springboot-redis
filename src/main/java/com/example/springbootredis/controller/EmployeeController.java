@@ -1,12 +1,13 @@
 package com.example.springbootredis.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,8 +23,8 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService loginService;
 	
-	@GetMapping("/emp")
-	public Optional<Employee> getEmpDetailsById(@RequestParam("empId") Integer empId) {
+	@GetMapping("/emp/{empId}")
+	public Employee getEmpDetailsById(@PathVariable("empId") Integer empId) {
 		return loginService.getEmployeeDetails(empId);
 	}
 	
@@ -33,12 +34,17 @@ public class EmployeeController {
 	}
 	
 	@DeleteMapping("/delete")
-	public void deleteByEmpId(@RequestParam("empId") Integer empId) {
-		loginService.deleteEmpDetails(empId);
+	public String deleteByEmpId(@RequestParam("empId") Integer empId) {
+		return loginService.deleteEmpDetails(empId);
 	}
 	
 	@PostMapping("/save")
-	public void saveEmpDetails(@RequestBody Employee emp) {
-		loginService.saveEmp(emp);
+	public Employee saveEmpDetails(@RequestBody Employee emp) {
+		return loginService.saveEmp(emp);
+	}
+	
+	@PutMapping("/update/{empId}")
+	public Employee updateEmpDetails(@RequestBody Employee emp, @PathVariable("empId") Integer empId) {
+		return loginService.updateEmpDetails(emp, empId);
 	}
 }

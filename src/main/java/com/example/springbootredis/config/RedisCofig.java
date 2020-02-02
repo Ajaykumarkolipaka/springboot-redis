@@ -1,19 +1,20 @@
 package com.example.springbootredis.config;
 
+import java.time.Duration;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import com.example.springbootredis.model.Employee;
 
 @Configuration
-public class BeanConfig {
+public class RedisCofig {
 
 	@Bean
-	JedisConnectionFactory getJedisConnectionFactory() {
+	public JedisConnectionFactory getJedisConnectionFactory() {
 		return new JedisConnectionFactory();
 	}
 	
@@ -25,10 +26,19 @@ public class BeanConfig {
 //	}
 
 	@Bean
-	RedisTemplate<String, Employee> getRedisTemplate() {
+	public RedisTemplate<String, Employee> getRedisTemplate() {
 		RedisTemplate<String, Employee> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(getJedisConnectionFactory());
 		return redisTemplate;
+	}
+	
+	@Bean
+	public RedisCacheConfiguration getRedisCacheConfig() {
+		RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+				.entryTtl(Duration.ofSeconds(60))
+				.disableCachingNullValues();
+		return cacheConfig;
+		
 	}
 
 }
